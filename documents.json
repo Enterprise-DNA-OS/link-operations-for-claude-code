@@ -1,11 +1,56 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
+    "name": "client-report",
+    "title": "Client placement report",
+    "for_each": "select id,name from campaigns order by name",
     "file": "name",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Campaign",
+        "layout": "record",
+        "sql": "select name,client,owner,claimed_wins,current_live,overdue from campaign_desk where id=$1"
+      },
+      {
+        "title": "Records for review",
+        "note": "Fictional in the demo. Internal worksheet only. No message is sent and no ranking result is promised.",
+        "sql": "select name,page_url,target_url,state,observed_on,stale,qualification_gap from placement_desk where campaign_id=$1 order by name"
+      }
+    ]
+  },
+  {
+    "name": "follow-up-worksheet",
+    "title": "Follow-up review worksheet",
+    "for_each": "select id,name from campaigns order by name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Campaign",
+        "layout": "record",
+        "sql": "select name,client,owner,claimed_wins,current_live,overdue from campaign_desk where id=$1"
+      },
+      {
+        "title": "Records for review",
+        "note": "Fictional in the demo. Internal worksheet only. No message is sent and no ranking result is promised.",
+        "sql": "select name,owner,next_due,eligible,permission from opportunity_desk where campaign_id=$1 and milestone not in ('won','lost','paused') order by next_due nulls first"
+      }
+    ]
+  },
+  {
+    "name": "placement-evidence",
+    "title": "Placement evidence worksheet",
+    "for_each": "select id,name from campaigns order by name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Campaign",
+        "layout": "record",
+        "sql": "select name,client,owner,claimed_wins,current_live,overdue from campaign_desk where id=$1"
+      },
+      {
+        "title": "Records for review",
+        "note": "Fictional in the demo. Internal worksheet only. No message is sent and no ranking result is promised.",
+        "sql": "select name,page_url,consideration,state,rel,evidence,observed_on from placement_desk where campaign_id=$1 order by name"
+      }
     ]
   }
 ]

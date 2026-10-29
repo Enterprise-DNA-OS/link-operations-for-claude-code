@@ -1,13 +1,35 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Link Operations for Claude Code: what needs attention, rendered by npm run view",
+    "title": "The link operations week",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Campaign delivery",
+        "sql": "select name,client,opportunities,claimed_wins,current_live,overdue from campaign_desk order by name"
+      },
+      {
+        "title": "Follow-ups needing review",
+        "sql": "select name,campaign,owner,next_due,eligible from opportunity_desk where next_due<=current_date and milestone not in ('won','lost','paused') order by next_due"
+      }
+    ]
+  },
+  {
+    "name": "placements",
+    "title": "Placement evidence",
+    "sections": [
+      {
+        "title": "Latest manual observations",
+        "sql": "select name,campaign,page_url,state,observed_on,stale,qualification_gap from placement_desk order by name"
+      }
+    ]
+  },
+  {
+    "name": "permission",
+    "title": "Permission and evidence exceptions",
+    "sections": [
+      {
+        "title": "Review queue",
+        "sql": "select rule,name,finding from compliance_desk order by rule,name"
       }
     ]
   }

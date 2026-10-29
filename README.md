@@ -1,115 +1,96 @@
-<h1 align="center">Link Operations for Claude Code</h1>
+# Link Operations for Claude Code
 
-<p align="center">
-  <strong>The open-source link operations desk that is just a database and Claude Code.</strong>
-</p>
+See which follow-up is overdue, which claimed win has evidence and which placement has gone missing. Your campaigns, permission records, opportunities and manual link observations live in a database you own. MIT licensed. Built by Enterprise DNA.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
+| Do it yourself | We customise it | We run it for you |
+|---|---|---|
+| Free. Install the base and bring a prepared opportunity export across. | Your fields, rules, reports, data migration and connections. | Installed and operated through Omni by Enterprise DNA. One setup fee, then a retainer. |
+| [Quick start](#quick-start) | [Get your version built](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=pitchbox&utm_medium=readme) | [Talk to Sam](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=pitchbox&utm_medium=readme) |
 
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your Pitchbox data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=pitchbox">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/pitchbox?utm_source=github&utm_medium=readme&utm_campaign=pitchbox">How it works</a></td>
-  </tr>
-</table>
+Pitchbox Scale lists US$1,200 a month with monthly billing, or US$825 a month billed annually. That is US$14,400 or US$9,900 over a year, respectively. Both billing options carry a one-year commitment. [Vendor pricing](https://pitchbox.com/pricing/), checked 29 October 2026. This is a list-price comparison, not a verified customer invoice.
 
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-pitchbox">Instead of Pitchbox</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
-
----
-
-## What is this
-
-Link Operations for Claude Code does the job you pay Pitchbox for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the Pitchbox dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays Pitchbox per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=pitchbox).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
+This base replaces the editorial records desk: campaign plans, existing publisher relationships, due follow-ups, placement evidence and client reports. It does not reproduce Pitchbox's discovery index, inbox, email sending, deliverability tools or automated link monitoring. An agency uses its own existing contacts and observations. No paid data provider or OAuth connection is needed to run these workflows.
 
 ## Quick start
-
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
 
 ```bash
 git clone https://github.com/Enterprise-DNA-OS/link-operations-for-claude-code.git
 cd link-operations-for-claude-code
 npm install
+npm test
 npm run demo
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+Use Node 22. Tests and demo use temporary fictional data and ignore DATABASE_URL. To retain a fictional demo, run `npm run migrate` then `npm run seed`. For real work, migrate an empty private database without seeding. With no DATABASE_URL, local PGlite stores data under .data/db. Set DATABASE_URL for a private Postgres database with verified remote TLS. Back up and protect the database and its credentials.
 
-### Use it with your own Postgres or Supabase
+Open this folder in Claude Code, Codex, OpenCode or Cursor and ask for /follow-ups. The same 33 command recipes work through every agent. The code makes no model calls; the agent account is separate.
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
-
-## The commands
-
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
-
-| Command | What it does |
-|---|---|
-| `/...` | ... |
-
-## Instead of Pitchbox
-
-<!-- TODO(author): how to bring data across from Pitchbox; link docs/replace-pitchbox.md -->
-
-## Architecture
-
-```
-link-operations-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
+```bash
+node scripts/links.mjs follow-ups
+node scripts/links.mjs link-checks
+node scripts/links.mjs client-report
+npm run view
+npm run docs
 ```
 
-## Built for coding agents
+Three read-only dashboards show the week, placements and permission exceptions. Three document types produce client placement reports, follow-up worksheets and evidence worksheets. Change your business name, logo and colours in brand.json. Keep these local reports private.
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+## The five weekly rituals
 
-## Contributing
+- /follow-ups: due work with recorded express permission for review.
+- /permission-review: unknown and withdrawn permissions across active opportunities.
+- /link-checks: manual observations, stale evidence and paid-link attribute gaps.
+- /client-report: claimed wins beside current observed live placements.
+- /weekly-review: a Monday brief from attention, link checks and compliance.
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+/compliance checks the limited records controls in [docs/compliance.md](docs/compliance.md). /draft-follow-up and /draft-client-report write local drafts and never send. /customise changes fields and rules through an additive migration. /new-view adds a read-only report. All reads have --json output. Names and partial IDs resolve only when unambiguous. [Every command and its options](docs/cli.md).
 
-## Want it installed and run for you?
+## Bring your Pitchbox opportunities
 
-Enterprise DNA installs Link Operations for Claude Code for your business, migrates your Pitchbox data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+Use Pitchbox's Opportunity Search or Pipeline export. Its help centre documents a CSV containing domain, URL, milestone, tags and metrics. Match headings once if your export differs, then bring the prepared file across in one command:
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=pitchbox)
-- Read more: [enterprisedna.co/omni/instead-of/pitchbox](https://enterprisedna.co/omni/instead-of/pitchbox?utm_source=github&utm_medium=readme&utm_campaign=pitchbox)
+```bash
+node scripts/links.mjs import pitchbox examples/pitchbox.csv --campaign="Coastal research" --actor="Operator" --dry-run
+```
 
-## License
+Review the dry run, then omit --dry-run. Import is atomic. Identical source rows skip; changed source rows fail for reconciliation. Every original column is preserved. Unknown milestones become review. Contact permission is never inferred from a CSV. A Won milestone does not prove a live placement. The included sample is synthetic, not an untouched vendor export. [Mapping and acceptance guide](docs/replace-pitchbox.md).
 
-MIT. Copyright (c) 2026 Enterprise DNA.
+## Ten questions answered from your records
+
+/insights runs these today. These combine your own records, without claiming that Pitchbox cannot build a comparable custom report.
+
+1. Which overdue follow-ups have recorded permission?
+2. Which active opportunities have unknown or withdrawn permission?
+3. Which claimed wins still lack a placement record?
+4. Which paid or gifted placements lack a qualifying link attribute?
+5. Which placements need a fresh observation?
+6. Which campaigns report more wins than current live placements?
+7. Which owners have overdue work with unresolved permission?
+8. Which placements are missing at the latest observation?
+9. Which publishers appear across several campaigns?
+10. Which active opportunities have no next review date?
+
+## Your first hour: ten things to ask for
+
+1. Show this week's follow-ups.
+2. Show contacts whose permission needs review.
+3. Find wins with no placement evidence.
+4. Show missing links and the last observation date.
+5. Draft the Coastal client report.
+6. Record the editor's reply using its real date.
+7. Suppress an address that withdrew permission.
+8. Show paid links missing a qualifying attribute.
+9. Put our brand on the evidence worksheet.
+10. Add our editorial priority field through /customise.
+
+## Evidence and access
+
+One private database serves one agency's trusted operators. Actor labels record who was named, not authenticated identity. Public privileges are revoked, row security is enabled and views use invoker permissions. The database owner can bypass these controls. This base has no public API, client portal or shared approval system.
+
+Observations and activity history are append-only through normal operations. They are not tamper-proof against a database owner. Store source evidence privately, keep regular backups and test restores. `export` creates a full JSON archive; use normal database backup tools for disaster recovery.
+
+## Verification
+
+npm test exercises migrations, repeatable seed data, commands, permission changes, suppression, chronological observations, import dry runs, repeated and conflicting rows, rollback, private archives, restricted database roles and escaped HTML. GitHub Actions runs Node 22 on Windows and Linux. Local execution is Linux with PGlite; see [verification](docs/verification.md) for completed checks.
+
+[Operating rules](CLAUDE.md), [screen-free scope](docs/why-no-front-end.md), [selection evidence](docs/research.md). MIT licence.

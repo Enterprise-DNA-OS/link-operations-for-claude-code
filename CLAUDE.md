@@ -1,43 +1,53 @@
-# Link Operations for Claude Code: operating instructions
+# Link Operations for Claude Code
 
-This file is the brain. Claude Code reads it at the start of every session. It says who this is for, how work gets done, and the one right way to do each recurring job.
+Run one agency's private editorial link records desk. One database per agency, operated by trusted staff. This is not a public multi-tenant service. Read the CLI result before answering.
 
-## Who this is for
+## Rules
 
-- **Business:** [YOUR BUSINESS]
-- **Operator:** [YOUR NAME], [your role]
-- **What matters most:** [the one or two outcomes you care about]
+- Never send, schedule outreach, publish, purchase links or scrape contacts. Drafts stay local.
+- Unknown and withdrawn permissions block follow-up drafts. Record evidence and scope for express permission. Suppression applies across campaigns through the unique contact address.
+- Claimed wins and observed placements are different records. Never invent live links, link attributes, traffic, rankings or returns.
+- Every mutation names --actor. This is an audit label, not authenticated identity. Keep database access restricted.
+- Use ISO dates and real evidence references. Observation freshness of 30 days and quiet work of 14 days are local policies, not statutory periods.
+- Keep real data, imports, exports, reports and credentials out of Git. Back up before additive schema changes.
+- Run npm test after changes. Use the existing CLI and commands, not a parallel workflow.
 
-Fill this in once. A worker with context knows. A worker without it guesses.
+## Routing
 
-## How to work
+- /campaigns: .claude/commands/campaigns.md
+- /contacts: .claude/commands/contacts.md
+- /opportunities: .claude/commands/opportunities.md
+- /opportunity: .claude/commands/opportunity.md
+- /follow-ups: .claude/commands/follow-ups.md
+- /permission-review: .claude/commands/permission-review.md
+- /link-checks: .claude/commands/link-checks.md
+- /client-report: .claude/commands/client-report.md
+- /attention: .claude/commands/attention.md
+- /compliance: .claude/commands/compliance.md
+- /history: .claude/commands/history.md
+- /insights: .claude/commands/insights.md
+- /weekly-review: .claude/commands/weekly-review.md
+- /add-campaign: .claude/commands/add-campaign.md
+- /close-campaign: .claude/commands/close-campaign.md
+- /add-contact: .claude/commands/add-contact.md
+- /permission: .claude/commands/permission.md
+- /suppress: .claude/commands/suppress.md
+- /add: .claude/commands/add.md
+- /attach-contact: .claude/commands/attach-contact.md
+- /plan: .claude/commands/plan.md
+- /move: .claude/commands/move.md
+- /log: .claude/commands/log.md
+- /record-placement: .claude/commands/record-placement.md
+- /observe: .claude/commands/observe.md
+- /import: .claude/commands/import.md
+- /export: .claude/commands/export.md
+- /draft-follow-up: .claude/commands/draft-follow-up.md
+- /draft-client-report: .claude/commands/draft-client-report.md
+- /view: .claude/commands/view.md
+- /documents: .claude/commands/documents.md
+- /customise: .claude/commands/customise.md
+- /new-view: .claude/commands/new-view.md
 
-1. **Take a brief, not a script.** The operator describes the outcome. You run the right command and present the answer.
-2. **Read before you write.** Before drafting anything about a record, read its full history first.
-3. **Plain language.** Short sentences. No filler. Numbers in tables.
-4. **Silent success, loud problems.** No play-by-play. Say what broke and what you did about it.
-5. **Stop at the line.** Anything that sends, deletes, or faces a customer waits for a yes in this session.
+## Storage
 
-## Routing table: one right way for each recurring job
-
-| When the operator asks for... | Use this |
-|---|---|
-| <!-- TODO(author): one row per slash command --> | `/...` |
-
-If an ask fits nothing here, run the CLI directly (`npm run <cli> -- --help`) and then propose a new command for it.
-
-## Hard rules
-
-- Never send email or messages from here. Draft to `drafts/`, a person sends.
-- Never delete records without an explicit yes in this session. Prefer marking closed or archived.
-- Never invent a record. If a name is ambiguous, list the candidates and ask.
-- The database is the source of truth. If the answer is not in it, say so.
-
-## Where things live
-
-- `scripts/` the CLI. `scripts/lib/db.mjs` picks `DATABASE_URL` (Postgres, Supabase) or the embedded database in `.data/`.
-- `supabase/migrations/` the schema, plain SQL. `npm run migrate` applies it.
-- `.claude/commands/` the slash commands. Add one every time the same ask comes twice.
-- `docs/` the thesis and the guide for moving off Pitchbox.
-
-Built by Enterprise DNA. Installed and run for you as part of Omni: https://enterprisedna.co/omni/instead-of/pitchbox
+DATABASE_URL selects private Postgres. Unset uses local PGlite. Row security and revoked public permissions block unrelated roles; the database owner has full access. No public API is provided. Read docs/compliance.md and docs/replace-pitchbox.md before using real records.
